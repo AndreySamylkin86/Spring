@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head.html :: head"/>
+
+<body>
+
+<nav th:replace="fragments/head.html :: navbar"/>
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <form th:action="@{/product/update}" th:method="post" th:object="${product}">
+                <input type="hidden" th:field="*{id}" id="id" name="id">
+
+                <div class="form-group">
+                    <label>Product name</label>
+                    <input type="text" th:field="*{productname}" class="form-control" id="name" name="productname" placeholder="Enter product name">
+                    <p class="text-danger" th:if="${#fields.hasErrors('productname')}" th:errors="*{productname}"></p>
+                </div>
+
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" th:field="*{title}" class="form-control" id="title" name="title" placeholder="Enter title">
+
+                </div>
+
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" th:field="*{price}" class="form-control" id="price" name="price" placeholder="Enter product price">
+                    <p class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Wrong price format</p>
+                </div>
+
+
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="fragments/footer.html :: scripts"/>
+
+</body>
