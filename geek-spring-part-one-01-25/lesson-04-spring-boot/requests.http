@@ -1,12 +1,15 @@
-GET http://localhost:8080/spring-mvc-app/api/v1/product/all
+GET http://localhost:8099/spring-mvc-app/api/v1/product/all
+Authorization: Basic 123 123
 
 ###
 
-GET http://localhost:8080/spring-mvc-app/api/v1/product/1
-
+GET http://localhost:8099/spring-mvc-app/api/v1/product/1
+Authorization: Basic 123 123
 ###
 
-POST http://localhost:8080/spring-mvc-app/api/v1/product
+POST http://localhost:8099/spring-mvc-app/api/v1/product
+#Authorization: Basic guest guest
+Authorization: Basic 123 123
 Content-Type: application/json
 
   {
@@ -17,11 +20,12 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:8080/spring-mvc-app/api/v1/product
+PUT http://localhost:8099/spring-mvc-app/api/v1/product
+Authorization: Basic 123 123
 Content-Type: application/json
 
 {
-  "id": 9,
+  "id": 16,
   "productname": "Milk",
   "title": "Soy milk",
   "price": 400.00
@@ -29,4 +33,15 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:8080/spring-mvc-app/api/v1/product/9
+DELETE http://localhost:8099/spring-mvc-app/api/v1/product/16
+Authorization: Basic 123 123
+###
+
+POST http://localhost:8099/spring-mvc-app/api/v1/cart/1/user/2/product?qty=1
+#Authorization: Basic guest guest
+Authorization: Basic 123 123
+###
+
+GET http://localhost:8099/spring-mvc-app/api/v1/cart/1/user
+#Authorization: Basic guest guest
+Authorization: Basic 123 123

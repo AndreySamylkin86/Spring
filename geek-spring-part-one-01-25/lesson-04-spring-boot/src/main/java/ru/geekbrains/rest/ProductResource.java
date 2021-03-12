@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.controller.BadRequestException;
 import ru.geekbrains.controller.NotFoundException;
@@ -41,12 +42,12 @@ public class ProductResource {
 
     @GetMapping("filter")
     public Page<ProductRepr> listPage(
-                           @RequestParam("productnameFilter") Optional<String> productnameFilter,
-                           @RequestParam("minPriceFilter") Optional<BigDecimal> minPriceFilter,
-                           @RequestParam("maxPriceFilter") Optional<BigDecimal> maxPriceFilter,
-                           @RequestParam("page") Optional<Integer> page,
-                           @RequestParam("size") Optional<Integer> size,
-                           @RequestParam("sortField") Optional<String> sortField) {
+            @RequestParam("productnameFilter") Optional<String> productnameFilter,
+            @RequestParam("minPriceFilter") Optional<BigDecimal> minPriceFilter,
+            @RequestParam("maxPriceFilter") Optional<BigDecimal> maxPriceFilter,
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("size") Optional<Integer> size,
+            @RequestParam("sortField") Optional<String> sortField) {
 
         return productService.findWithFilter(
                 productnameFilter.orElse(null),
@@ -58,6 +59,7 @@ public class ProductResource {
         );
     }
 
+    @Secured({"ROLE_SUPER_ADMIN", "ROLE_ADMIN"})
     @PostMapping(consumes = "application/json")
     public ProductRepr create(@RequestBody ProductRepr productRepr) {
         if (productRepr.getId() != null) {
@@ -67,6 +69,7 @@ public class ProductResource {
         return productRepr;
     }
 
+    @Secured({"ROLE_SUPER_ADMIN", "ROLE_ADMIN"})
     @PutMapping(consumes = "application/json")
     public void update(@RequestBody ProductRepr productRepr) {
         if (productRepr.getId() == null) {
@@ -74,7 +77,7 @@ public class ProductResource {
         }
         productService.save(productRepr);
     }
-
+    @Secured({"ROLE_SUPER_ADMIN", "ROLE_ADMIN"})
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Long id) {
         productService.delete(id);

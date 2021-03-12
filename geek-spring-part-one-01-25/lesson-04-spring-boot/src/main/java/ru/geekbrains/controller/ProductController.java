@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -62,7 +63,7 @@ public class ProductController {
                 .orElseThrow(NotFoundException::new));
         return "product_form";
     }
-
+    @Secured({"ROLE_SUPER_ADMIN", "ROLE_ADMIN"})
     @PostMapping("/update")
     public String update(@Valid @ModelAttribute("product") ProductRepr productRepr, BindingResult result, Model model) {
         logger.info("Update endpoint requested");
@@ -76,7 +77,7 @@ public class ProductController {
         productService.save(productRepr);
         return "redirect:/product";
     }
-
+    @Secured({"ROLE_SUPER_ADMIN", "ROLE_ADMIN"})
     @GetMapping("/new")
     public String create(Model model) {
         logger.info("Create new product request");
@@ -84,7 +85,7 @@ public class ProductController {
         model.addAttribute("product", new ProductRepr());
         return "product_form";
     }
-
+    @Secured({"ROLE_SUPER_ADMIN", "ROLE_ADMIN"})
     @DeleteMapping("/{id}")
     public String remove(@PathVariable("id") Long id) {
         logger.info("Product delete request");
